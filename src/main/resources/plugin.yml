@@ -1,0 +1,55 @@
+name: DiscountSurvivalGames
+version: '0.1'
+main: me.discountzen.discountSurvivalGames.DiscountSurvivalGames
+author: discountzen
+api-version: '1.21'
+permissions:
+  dsg.admin.configure.map:
+    description: Allows editing of original maps.
+  dsg.admin.start:
+    description: Allows starting a game
+  dsg.admin.abort:
+    description: Allows aborting a game
+  dsg.admin.dev:
+    description: Allows entering dev mode
+  dsg.admin.game:
+    description: Permission for /game command for interacting with existing games
+  dsg.admin.map:
+    description: Permission for /map command for editing map entries
+  dsg.admin.main:
+    description: Allows use of the main plugin command
+  dsg.admin.fly:
+    description: Allows toggling flight
+commands:
+  discountsurvivalgames:
+    permission: dsg.admin.main
+    aliases: [dsg]
+  join:
+  leave:
+  games:
+  setspawnpedestal:
+    permission: dsg.admin.configure.map
+  setmapmiddle:
+    permission: dsg.admin.configure.map
+  setworldspawn:
+    permission: dsg.admin.configure.map
+  makesgchest:
+    permission: dsg.admin.configure.map
+  startgame:
+    permission: dsg.admin.start
+  dev:
+    permission: dsg.admin.dev
+  game:
+    permission: dsg.admin.game
+  abortgame:
+    permission: dsg.admin.abort
+  showchests:
+    permission: dsg.admin.configure.map
+  setsgworldborder:
+    permission: dsg.admin.configure.map
+  getsetupitems:
+    permission: dsg.admin.configure.map
+  map:
+    permission: dsg.admin.map
+  fly:
+    permission: dsg.admin.fly

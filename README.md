@@ -27,6 +27,7 @@ This is a Minecraft Java plugin made for `Spigot 1.21.8 (ver 1.21.8-R0.1-SNAPSHO
   - The codebase does not consistently implement programming good practice.
 
   I've written these here as reflection on the project and what I'd do differently, not as a warning for production use.
+  Take note of the `refactor` branch for a demonstration of how I've solved some of the problems listed above.
 
 ## Setup
 

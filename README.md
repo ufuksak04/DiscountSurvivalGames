@@ -5,7 +5,7 @@ This is a Minecraft Java plugin made for Spigot 1.21.8 (ver 1.21.8-R0.1-SNAPSHOT
 ## Index
 
   - [Features](#Features)
-  - [Development Notes](#Development_Notes)
+  - [Development Notes](#Development-Notes)
   - [Setup](#Setup)
   - [License](#License)
 

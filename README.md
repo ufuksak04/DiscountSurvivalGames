@@ -1,4 +1,4 @@
-### DiscountSurvivalGames
+# DiscountSurvivalGames
 
 This is a Minecraft Java plugin made for `Spigot 1.21.8 (ver 1.21.8-R0.1-SNAPSHOT)` that aims to clone the classic minigame Survival Games (or Hunger Games). It is meant as a learning project as at the start of making this project I had zero Java knowledge.
 
@@ -29,7 +29,7 @@ This is a Minecraft Java plugin made for `Spigot 1.21.8 (ver 1.21.8-R0.1-SNAPSHO
 
 ## Setup
 
-  # Requirements
+  ### Requirements
   - a server running Spigot `1.21.8-R0.1-SNAPSHOT`
   - JDK: `jdk-21.0.10+7`
   - optionally a PostgreSQL database

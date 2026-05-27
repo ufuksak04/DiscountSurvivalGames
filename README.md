@@ -16,6 +16,7 @@ This is a Minecraft Java plugin made for `Spigot 1.21.8 (ver 1.21.8-R0.1-SNAPSHO
   - Persistent player data - player statistics like win or kill count are stored in a PostgreSQL database or JSON (if database is unavailable)
   - Custom commands - Many custom commands are implemented to configure the plugin or influence the game lifecycle such as skipping to the next event on the game timer with `/game skip`
   - Event-driven player handling - a vast range of event listeners are used to view or influence player activity using the Bukkit API
+  - Map setup system - There are two ways to set up a map for play, the automatic setup that fills chests based on distance from the map middle, and the manual setup using a set of admin items that sets chests to loot tiers by hand. This means a quick and easy setup method exists, and can later be improved manually by adding nuanced locations like hidden chests having higher quality of loot even if they are close to the spawn area.
 
 ## Development Notes
 

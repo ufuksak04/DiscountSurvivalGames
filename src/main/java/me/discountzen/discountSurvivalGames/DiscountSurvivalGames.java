@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public final class DiscountSurvivalGames extends JavaPlugin {
+
     private Connection connection;
     private SQLUtils sqlUtils;
     private PlayerData data;
@@ -54,6 +55,7 @@ public final class DiscountSurvivalGames extends JavaPlugin {
         }
         else {
             try {
+                // database was always stored on my home pc for development, but can easily be changed to a cloud hosted database either via this line or adding further database information to environment variables
                 dbConnect("localhost", 3306, "mcserver", dbUser, dbPass);
                 databaseExists = true;
             } catch (SQLException e) {
@@ -61,7 +63,6 @@ public final class DiscountSurvivalGames extends JavaPlugin {
                 databaseExists = false;
             }
         }
-
         sqlUtils = new SQLUtils(connection, this);
         gameManager = new GameManager(this);
         data = new PlayerData(this);
@@ -72,6 +73,7 @@ public final class DiscountSurvivalGames extends JavaPlugin {
             gameManager.ReadWorldFiles(this);
         });
 
+        // Registry for all plugin commands
         getCommand("discountsurvivalgames").setExecutor(new DiscountSurvivalGamesCommand(this));
         getCommand("discountsurvivalgames").setTabCompleter(new DiscountSurvivalGamesCommand(this));
 
@@ -102,9 +104,13 @@ public final class DiscountSurvivalGames extends JavaPlugin {
         getCommand("fly").setExecutor(new FlyCommand(this));
         getCommand("dev").setExecutor(new DevCommand(this));
 
+        // Main bukkit task that does packet handling and game creation
         new MainThreadTask(this).runTaskTimer(this, 0L, 20L);
-        new PlayerTrackerTask(this).runTaskTimer(this, 0L, 3L);
 
+        // Player track implementation is incomplete and can be ignored
+        //new PlayerTrackerTask(this).runTaskTimer(this, 0L, 3L);
+
+        // Registry for overridden bukkit events
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
@@ -126,13 +132,14 @@ public final class DiscountSurvivalGames extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // on plugin disable, releases all tasks from memory and flushes all player data to json/database in case it was not saved by other means
         tasksToCancel.forEach(BukkitTask::cancel);
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerJsonWriter.SerializedPlayerData jsonData = new PlayerJsonWriter.SerializedPlayerData(p.getUniqueId());
             SGPlayer m = data.getPlayer(p);
             jsonData.setWins(m.wins);
             jsonData.setTotalKills(m.totalKills);
-            PlayerJsonWriter.WritePlayerData(this, jsonData);
+            PlayerJsonWriter.writePlayerData(this, jsonData);
         }
         /*
         if (databaseExists) {
@@ -160,7 +167,7 @@ public final class DiscountSurvivalGames extends JavaPlugin {
     public void dbConnect(String host, int port, String database, String username, String password) throws SQLException {
         if (connection != null && !connection.isClosed()) return;
 
-        String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useSSL=false&autoReconnect=true";
+        String url = "jdbc:postgresql://" + host + ":" + port + "/" + database + "?useSSL=false&autoReconnect=true";
         connection = DriverManager.getConnection(url, username, password);
         System.out.println("[DiscountSurvivalGames] Database connection successful!");
     }

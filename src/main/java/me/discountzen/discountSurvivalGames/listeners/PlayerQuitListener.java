@@ -37,7 +37,7 @@ public class PlayerQuitListener implements Listener {
         PlayerJsonWriter.SerializedPlayerData jsonData = new PlayerJsonWriter.SerializedPlayerData(mem.uuid);
         jsonData.setWins(mem.wins);
         jsonData.setTotalKills(mem.totalKills);
-        PlayerJsonWriter.WritePlayerData(plugin, jsonData);
+        PlayerJsonWriter.writePlayerData(plugin, jsonData);
         /*
         if (plugin.databaseExists) {
             plugin.getSQL().updateAsync(

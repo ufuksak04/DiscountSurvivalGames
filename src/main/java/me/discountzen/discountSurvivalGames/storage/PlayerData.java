@@ -54,7 +54,7 @@ public class PlayerData {
     private SGPlayer createMemory(UUID uuid) {
         SGPlayer newPlayer = new SGPlayer(uuid, plugin.getGameManager());
         players.put(uuid, newPlayer);
-        PlayerJsonWriter.SerializedPlayerData data = PlayerJsonWriter.ReadPlayerData(plugin, uuid);
+        PlayerJsonWriter.SerializedPlayerData data = PlayerJsonWriter.readPlayerData(plugin, uuid);
         newPlayer.totalKills = data.getTotalKills();
         newPlayer.wins = data.getWins();
         return newPlayer;

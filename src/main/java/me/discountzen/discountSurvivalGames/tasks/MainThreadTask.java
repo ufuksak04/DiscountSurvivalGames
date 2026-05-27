@@ -28,11 +28,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class MainThreadTask extends BukkitRunnable {
     private final DiscountSurvivalGames plugin;
     private final PlayerData data;
+    private final GameManager gameManager;
 
 
     public MainThreadTask(DiscountSurvivalGames plugin) {
         this.plugin = plugin;
         this.data = plugin.getPlayerData();
+        gameManager = plugin.getGameManager();
         /*
         Location location = new Location(Bukkit.getWorld(plugin.config.hubMap), 2044.500, 96, 2209.500, 0, 0);
         ArmorStand stand = location.getWorld().spawn(location, ArmorStand.class, a -> {
@@ -48,6 +50,8 @@ public class MainThreadTask extends BukkitRunnable {
 
 
         ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+        // cancel player interact packet if user is a spectator
         protocolManager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
@@ -57,8 +61,10 @@ public class MainThreadTask extends BukkitRunnable {
                 }
             }
         });
-        PacketContainer pac = protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY);
-        Bukkit.getLogger().info(pac.getStructures().getFields().toString());
+//        PacketContainer pac = protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY);
+//        Bukkit.getLogger().info(pac.getStructures().getFields().toString());
+
+        // cancel all sound packet created by player if user is a spectator and if the recipient of the sound is a player who is still participating in the game.
         protocolManager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_STATUS, PacketType.Play.Server.ENTITY_SOUND) {
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -99,7 +105,6 @@ public class MainThreadTask extends BukkitRunnable {
         if (plugin.config.gameQueuerEnabled) GameQueuer();
         if (timer == 0) {
             timer = 60;
-            GameManager gameManager = plugin.getGameManager();
             gameManager.CleanupQueue();
             if (gamesInQueue > 0) StartGameFromQueue();
         }
@@ -107,14 +112,9 @@ public class MainThreadTask extends BukkitRunnable {
     }
 
     private void GameQueuer() {
-        GameManager gameManager = plugin.getGameManager();
         if (gameManager.games.size() + gamesInQueue < 3) {
-            QueueGame();
+            gamesInQueue++;
         }
-    }
-
-    private void QueueGame() {
-        gamesInQueue++;
     }
 
     private void StartGameFromQueue() {

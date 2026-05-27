@@ -14,18 +14,18 @@ import java.util.function.Consumer;
 
 public class PlayerJsonWriter {
 
-    public static void WritePlayerData(DiscountSurvivalGames plugin, SerializedPlayerData data) {
+    public static void writePlayerData(DiscountSurvivalGames plugin, SerializedPlayerData data) {
         File file = new File(plugin.getDataFolder(), "players/" + data.getUUID() + ".json");
         JsonUtils.writeJson(file, data);
     }
 
-    public static SerializedPlayerData ReadPlayerData(DiscountSurvivalGames plugin, UUID uuid) {
+    public static SerializedPlayerData readPlayerData(DiscountSurvivalGames plugin, UUID uuid) {
         File file = new File(plugin.getDataFolder(), "players/" + uuid + ".json");
 
         if (!file.exists()) {
             if (!(file.getParentFile().exists())) file.getParentFile().mkdirs();
             SerializedPlayerData fresh = new SerializedPlayerData(uuid);
-            WritePlayerData(plugin, fresh);
+            writePlayerData(plugin, fresh);
 
             return fresh;
         }

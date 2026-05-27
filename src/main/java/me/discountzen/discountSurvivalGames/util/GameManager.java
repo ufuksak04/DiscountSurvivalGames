@@ -44,7 +44,7 @@ public class GameManager {
 
     public Team invis;
 
-    // game id - task
+    // game id - task object
     public Map<Integer, GameControllerTask> games = new HashMap<>();
     // game id - world
     public Map<Integer, World> gameWorlds = new HashMap<>();

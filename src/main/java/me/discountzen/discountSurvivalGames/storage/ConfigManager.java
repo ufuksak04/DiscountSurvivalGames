@@ -47,11 +47,11 @@ public class ConfigManager {
 
         if (type == Integer.class && value instanceof Number)
             return type.cast(((Number) value).intValue());
-        if (type == Double.class && value instanceof Number)
+        else if (type == Double.class && value instanceof Number)
             return type.cast(((Number) value).doubleValue());
-        if (type == Long.class && value instanceof Number)
+        else if (type == Long.class && value instanceof Number)
             return type.cast(((Number) value).longValue());
-        if (type == Boolean.class && value instanceof String)
+        else if (type == Boolean.class && value instanceof String)
             return type.cast(Boolean.parseBoolean((String) value));
 
         for (ConfigValues val : ConfigValues.values()) {
